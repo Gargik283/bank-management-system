@@ -81,22 +81,22 @@ Bank-Management-System/
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home Page](screenshots/home.png)
+![Home Page](home.png)
 
 ### 👤 Create Account
-![Create Account](screenshots/create_account.png)
+![Create Account](create_account.png)
 
 ### 🔑 Login Page
-![Login Page](screenshots/login.png)
+![Login Page](login.png)
 
 ### 📊 Dashboard
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](dashboard.png)
 
 ### 💰 Deposit / Withdraw
-![Transaction](screenshots/deposit.png)
+![Transaction](deposit.png)
 
 ### 📜 Transaction History
-![History](screenshots/transaction_history.png)
+![History](transaction_history.png)
 
 ---
 
