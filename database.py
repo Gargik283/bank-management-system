@@ -16,9 +16,6 @@ def connect_to_database():
         print(f"An error occurred while connecting to the database: {e}")
         return None
     
-
-
-    
 if __name__ == "__main__":
     conn = connect_to_database()
     if conn :

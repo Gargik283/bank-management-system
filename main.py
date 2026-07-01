@@ -350,6 +350,82 @@ class BankSystem:
 
     def clear_audit_logs(self):
         return Audit.clear_audit_logs()
+    
+    def get_total_accounts(self):
+        connection = connect_to_database()
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT COUNT(*) FROM accounts")
+        total = cursor.fetchone()[0]
+
+        cursor.close()
+        connection.close()
+
+        return total
+
+    def get_total_bank_balance(self):
+        connection = connect_to_database()
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT COALESCE(SUM(balance),0) FROM accounts")
+        total = float(cursor.fetchone()[0])
+
+        cursor.close()
+        connection.close()
+
+        return total
+
+    def get_total_deposits(self):
+        connection = connect_to_database()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT COALESCE(SUM(amount),0)
+            FROM audit
+            WHERE action='Deposit'
+        """)
+
+        total = float(cursor.fetchone()[0])
+
+        cursor.close()
+        connection.close()
+
+        return total
+
+    def get_total_withdrawals(self):
+        connection = connect_to_database()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT COALESCE(SUM(amount),0)
+            FROM audit
+            WHERE action='Withdraw'
+        """)
+
+        total = float(cursor.fetchone()[0])
+
+        cursor.close()
+        connection.close()
+
+        return total
+    
+    def get_top_accounts(self):
+        connection = connect_to_database()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT name, balance
+            FROM accounts
+            ORDER BY balance DESC
+            LIMIT 10
+        """)
+
+        data = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return data
 
 # ==================== CLI MENU FUNCTIONS ====================
 def create_account_cli(bank):

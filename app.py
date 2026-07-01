@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 from main import BankSystem, Account
 
@@ -79,17 +80,18 @@ with st.sidebar:
     else:
 
         choice = st.radio(
-            "Menu",
-            [
-                "Dashboard",
-                "Deposit",
-                "Withdraw",
-                "Transaction History",
-                "Update Account",
-                "Delete Account",
-                "Logout"
-            ]
-        )
+        "Menu",
+        [
+            "Dashboard",
+            "Deposit",
+            "Withdraw",
+            "Transaction History",
+            "Analytics",
+            "Update Account",
+            "Delete Account",
+            "Logout"
+        ]
+    )
 
 
 # ===================================================
@@ -582,3 +584,86 @@ elif choice == "Admin":
 
             else:
                 st.error("Confirmation failed.")
+
+# ===================================================
+# ANALYTICS
+# ===================================================
+elif choice == "Analytics":
+
+    st.title("📊 Bank Analytics Dashboard")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric(
+            "👥 Total Accounts",
+            bank.get_total_accounts()
+        )
+
+    with col2:
+        st.metric(
+            "💰 Total Bank Balance",
+            f"₹{bank.get_total_bank_balance():,.2f}"
+        )
+
+    col3, col4 = st.columns(2)
+
+    with col3:
+        st.metric(
+            "📥 Total Deposits",
+            f"₹{bank.get_total_deposits():,.2f}"
+        )
+
+    with col4:
+        st.metric(
+            "📤 Total Withdrawals",
+            f"₹{bank.get_total_withdrawals():,.2f}"
+        )
+
+    st.divider()
+
+    chart_data = pd.DataFrame({
+        "Transaction": ["Deposits", "Withdrawals"],
+        "Amount": [
+            bank.get_total_deposits(),
+            bank.get_total_withdrawals()
+        ]
+    })
+
+    fig = px.bar(
+        chart_data,
+        x="Transaction",
+        y="Amount",
+        text="Amount",
+        title="Deposits vs Withdrawals"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+    st.subheader("🏆 Top 10 Richest Customers")
+
+top_accounts = bank.get_top_accounts()
+
+if top_accounts:
+
+    df = pd.DataFrame(
+        top_accounts,
+        columns=["Customer", "Balance"]
+    )
+
+    fig2 = px.bar(
+        df,
+        x="Balance",
+        y="Customer",
+        orientation="h",
+        text="Balance",
+        title="Top 10 Richest Customers",
+        color="Balance",
+        color_continuous_scale="Greens"
+    )
+
+    st.plotly_chart(fig2, use_container_width=True)
+
+else:
+    st.info("No accounts found.")
+
+    st.success("Analytics Dashboard Loaded Successfully ✅")
