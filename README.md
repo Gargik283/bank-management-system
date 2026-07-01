@@ -84,7 +84,7 @@ Bank-Management-System/
 ![Home Page](screenshots/home.png)
 
 ### 👤 Create Account
-![Create Account](screenshots/create.png)
+![Create Account](screenshots/create_account.png)
 
 ### 🔑 Login Page
 ![Login Page](screenshots/login.png)
