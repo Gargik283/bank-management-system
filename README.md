@@ -1,11 +1,10 @@
-# 🏦 Bank Management System (Python + SQL + Streamlit)
+# 🏦 Bank Transaction Analysis System (Python + SQL + Streamlit)
 
 ![Python](https://img.shields.io/badge/Python-3670A0?style=flat-square&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white)
 
-A full-stack **Bank Management System** built using Python, PostgreSQL, and Streamlit.  
-This project simulates real-world banking operations with secure login, transactions, and audit logging.
+A **data-driven banking system** built using Python, PostgreSQL, and Streamlit that simulates real-world financial transactions with structured data storage and audit tracking.
 
 ---
 
@@ -14,26 +13,46 @@ This project simulates real-world banking operations with secure login, transact
 
 ---
 
-## 📌 Features
+## 🎯 Project Objective
 
-### 👤 Customer Features
-- Create new bank account
-- Secure login using account number and PIN
-- Check account balance
-- Deposit money
-- Withdraw money
-- View transaction history
-- Update account details (name, PIN)
-- Delete account
+This project demonstrates how financial systems store, process, and track transaction data using **SQL databases and Python-based logic**, focusing on structured data management and audit trails.
 
-### 🛠️ Admin Features
-- View all audit logs
-- Clear audit logs
+---
 
-### 🔐 Security Features
-- SHA-256 PIN encryption
-- Secure authentication system
-- Session-based login using Streamlit
+## 📊 Data Analyst Focus
+
+This project highlights key data skills:
+
+- Relational database design (PostgreSQL)
+- Transaction-level data generation
+- Audit logs for tracking user activity
+- SQL-based data storage and retrieval
+- Structured dataset suitable for analytics
+- Foundation for dashboards and reporting systems
+
+---
+
+## 🧠 Key Functionalities
+
+### 👤 Customer Operations
+- Account creation with secure authentication
+- Login using account number and PIN
+- Deposit & withdrawal transactions
+- Balance tracking
+- Transaction history view
+- Account update and deletion
+
+### 🛠️ System Features
+- Audit logging for all transactions
+- Admin-level log monitoring
+- Secure data handling with hashed PINs
+
+---
+
+## 🔐 Security Design
+- SHA-256 hashing for PIN protection
+- Parameterized SQL queries (prevents injection)
+- Session-based authentication using Streamlit
 
 ---
 
@@ -47,118 +66,61 @@ This project simulates real-world banking operations with secure login, transact
 
 ---
 
-## 🏗️ Project Structure
+## 🏗️ System Architecture
 
 ```
-Bank-Management-System/
-│── app.py              # Streamlit frontend
-│── main.py             # Core banking logic
-│── database.py         # PostgreSQL connection
-│── README.md           # Project documentation
+User Interface (Streamlit)
+        ↓
+Business Logic (Python OOP)
+        ↓
+PostgreSQL Database
+        ↓
+Audit Logging System
 ```
-
----
-
-## 🗄️ Database Schema
-
-### Accounts Table
-- account_number (Primary Key)
-- name
-- pin (hashed using SHA-256)
-- balance
-- created_at
-
-### Audit Table
-- id
-- account_number
-- holder_name
-- action
-- amount
-- timestamp
 
 ---
 
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home Page](home.png)
+![Home Page](screenshots/home.png)
 
 ### 👤 Create Account
-![Create Account](create_account.png)
+![Create Account](screenshots/create.png)
 
 ### 🔑 Login Page
-![Login Page](login.png)
+![Login Page](screenshots/login.png)
 
 ### 📊 Dashboard
-![Dashboard](dashboard.png)
+![Dashboard](screenshots/dashboard.png)
 
 ### 💰 Deposit / Withdraw
-![Transaction](deposit.png)
+![Transaction](screenshots/deposit.png)
 
 ### 📜 Transaction History
-![History](transaction_history.png)
+![History](screenshots/history.png) 
 
 ---
 
-## ⚙️ Installation & Setup
+## 📈 Business & Data Value
 
-### 1. Clone Repository
-```bash
-git clone https://github.com/your-username/bank-management-system.git
-cd bank-management-system
-```
+This system simulates real banking datasets that can be used for:
 
----
-
-### 2. Install Dependencies
-```bash
-pip install streamlit psycopg2 pandas
-```
+- Customer transaction analysis
+- Financial behavior tracking
+- Fraud detection patterns (future scope)
+- SQL reporting and analytics
+- Dashboard creation (Power BI / Streamlit)
 
 ---
 
-### 3. Setup PostgreSQL Database
-- Create database: `banksystemmanagement`
-- Update credentials in `database.py`
+## 🚀 Future Enhancements
 
----
-
-### 4. Run Application
-```bash
-python -m streamlit run app.py
-```
-
----
-
-## 📊 Project Highlights
-
-- Object-Oriented Programming (OOP)
-- Real-world banking system simulation
-- Secure authentication using SHA-256
-- Transaction audit logging system
-- Clean Streamlit UI
-- PostgreSQL relational database design
-
----
-
-## 🎯 Data Analyst Relevance
-
-This project demonstrates:
-- Structured relational database design
-- SQL-based transaction storage
-- Data tracking through audit logs
-- Real-world dataset simulation
-- Foundation for analytics dashboards
-
----
-
-## 🚀 Future Improvements
-
-- Role-based login (Admin/User separation)
-- Data visualization dashboard
+- Data visualization dashboard (charts & insights)
+- Role-based authentication (Admin/User)
 - Cloud database integration
-- Transaction analytics charts
-- Email notifications
+- Export data to Excel/CSV
+- Advanced analytics on transactions
 
 ---
 
@@ -166,10 +128,11 @@ This project demonstrates:
 
 **Gargi Kundu**  
 Aspiring Data Analyst | Python | SQL | PostgreSQL  
-Passionate about data analysis and building real-world data projects.
+
+Focused on building real-world data systems and analytical applications.
 
 ---
 
-## ⭐ Support
+## ⭐ Note
 
-If you like this project, give it a ⭐ on GitHub!
+If you find this project useful, please consider starring the repository.
