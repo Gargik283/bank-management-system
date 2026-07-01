@@ -10,7 +10,7 @@ This project simulates real-world banking operations with secure login, transact
 ---
 
 ## 🚀 Live Demo
-👉 Add your Streamlit link here after deployment
+👉 https://gargik283-bank-management-system-app-gkw546.streamlit.app/
 
 ---
 
