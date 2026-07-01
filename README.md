@@ -1,4 +1,4 @@
-# 🏦 Bank Management System
+# 🏦 Bank Management System (Python + SQL + Streamlit)
 
 ![Python](https://img.shields.io/badge/Python-3670A0?style=flat-square&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
