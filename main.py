@@ -1,3 +1,4 @@
+from multiprocessing.dummy import connection
 import random
 import string
 import hashlib
@@ -426,6 +427,70 @@ class BankSystem:
         connection.close()
 
         return data
+    
+    def get_daily_transactions(self):
+        connection = connect_to_database()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                DATE(timestamp) AS transaction_date,
+                COUNT(*) AS total_transactions
+            FROM audit
+            GROUP BY DATE(timestamp)
+            ORDER BY transaction_date
+        """)
+
+        data = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return data
+    
+    def get_recent_transactions(self, account_number):
+
+        connection = connect_to_database()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT holder_name,
+                   action,
+                   amount,
+                   timestamp
+                FROM audit
+                WHERE account_number = %s
+                ORDER BY timestamp DESC
+                LIMIT 5
+                """, (account_number,))
+
+        rows = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return rows
+    
+    def get_top_customers(self):
+
+        connection = connect_to_database()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+        SELECT
+            name,
+            balance
+        FROM accounts
+        ORDER BY balance DESC
+        LIMIT 10
+    """)
+
+        rows = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return rows
 
 # ==================== CLI MENU FUNCTIONS ====================
 def create_account_cli(bank):
@@ -560,11 +625,13 @@ def view_transaction_history_cli(bank, account):
     print("      TRANSACTION HISTORY")
     print("=" * 40)
     
-    logs = bank.get_audit_logs(account.get_account_number())
-    if not logs:
+    recent = bank.get_recent_transactions(
+        account.get_account_number()
+    )
+    if not recent:
         print("No transaction history found.")
     else:
-        for log in logs:
+        for log in recent:
             print(f"[{log['timestamp']}] {log['action']} - Amount: ${log['amount']:.2f}")
     input("Press Enter to continue...")
 

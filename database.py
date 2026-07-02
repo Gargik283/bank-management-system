@@ -1,23 +1,30 @@
+import os
 import psycopg2
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 def connect_to_database():
     try:
-        pass
         connection = psycopg2.connect(
-            host="localhost",
-            port = 2004,
-            database="banksystemmanagement",
-            user="postgres",
-            password="Gargi@2004"
+            host=os.getenv("DB_HOST"),
+            port=os.getenv("DB_PORT"),
+            database=os.getenv("DB_NAME"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD")
         )
-        print("Connection to the database was successful.")
+
         return connection
+
     except Exception as e:
-        print(f"An error occurred while connecting to the database: {e}")
+        print(f"Database Connection Error: {e}")
         return None
-    
+
+
 if __name__ == "__main__":
     conn = connect_to_database()
-    if conn :
+
+    if conn:
+        print("Database Connected Successfully.")
         conn.close()
-        print("Connection closed. ")

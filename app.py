@@ -3,15 +3,89 @@ import pandas as pd
 import plotly.express as px
 
 from main import BankSystem, Account
+from datetime import datetime, timedelta
 
 # -----------------------------
 # PAGE CONFIG
 # -----------------------------
 st.set_page_config(
-    page_title="Bank Management System",
+    page_title="🏦 Bank Management System",
     page_icon="🏦",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
+st.markdown("""
+<style>
+
+/* ---------- Main ---------- */
+
+.block-container{
+    padding-top:2rem;
+    padding-bottom:2rem;
+    max-width:1400px;
+}
+
+/* ---------- Sidebar ---------- */
+
+section[data-testid="stSidebar"]{
+    background:#f8fafc;
+}
+
+/* ---------- Metric Cards ---------- */
+
+div[data-testid="stMetric"]{
+
+    background:white;
+
+    border-radius:18px;
+
+    border:1px solid #e5e7eb;
+
+    padding:18px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
+}
+
+/* ---------- Buttons ---------- */
+
+.stButton>button{
+
+    width:100%;
+
+    border-radius:12px;
+
+    height:3rem;
+
+    font-weight:600;
+
+}
+
+/* ---------- Dataframes ---------- */
+
+[data-testid="stDataFrame"]{
+
+    border-radius:12px;
+
+}
+
+/* ---------- Plotly ---------- */
+
+.js-plotly-plot{
+
+    border-radius:18px;
+
+}
+
+/* ---------- Headers ---------- */
+
+h1,h2,h3{
+
+    color:#0f172a;
+
+}
+
+</style>
+""",unsafe_allow_html=True)
 
 bank = BankSystem()
 
@@ -28,7 +102,7 @@ if "pin" not in st.session_state:
     st.session_state.pin = ""
 
 if "page" not in st.session_state:
-    st.session_state.page = "Home"
+    st.session_state.page = " 🏠 Home"
 
 
 # -----------------------------
@@ -54,7 +128,13 @@ def refresh_account():
 # -----------------------------
 # HEADER
 # -----------------------------
-st.title("🏦 Bank Management System")
+st.markdown("""
+# 🏦 Bank Management System
+
+### Secure Banking • PostgreSQL • Streamlit Dashboard
+
+---
+""")
 st.caption("Python • PostgreSQL • Streamlit")
 
 
@@ -63,41 +143,50 @@ st.caption("Python • PostgreSQL • Streamlit")
 # -----------------------------
 with st.sidebar:
 
-    st.title("Navigation")
+    st.image(
+        "https://img.icons8.com/color/96/bank-building.png",
+        width=80
+    )
+
+    st.title("🏦 Bank Portal")
+
+    st.caption("Python • PostgreSQL • Streamlit")
+
+    st.markdown("---")
 
     if not st.session_state.logged_in:
 
         choice = st.radio(
-            "Menu",
+            "Navigation",
             [
-                "Home",
-                "Create Account",
-                "Login",
-                "Admin"
+                "🏠 Home",
+                "👤 Create Account",
+                "🔑 Login",
+                "🛠️ Admin"
             ]
         )
 
     else:
 
         choice = st.radio(
-        "Menu",
-        [
-            "Dashboard",
-            "Deposit",
-            "Withdraw",
-            "Transaction History",
-            "Analytics",
-            "Update Account",
-            "Delete Account",
-            "Logout"
-        ]
-    )
+            "Navigation",
+            [
+                "📊 Dashboard",
+                "💰 Deposit",
+                "💸 Withdraw",
+                "📜 Transaction History",
+                "📈 Analytics",
+                "✏️ Update Account",
+                "🗑️ Delete Account",
+                "🚪 Logout"
+            ]
+        )
 
 
 # ===================================================
 # HOME
 # ===================================================
-if choice == "Home":
+if choice == "🏠 Home":
 
     col1, col2 = st.columns([2, 1])
 
@@ -116,15 +205,15 @@ This Bank Management System is developed using:
 
 Features:
 
-- Create Account
-- Secure Login
-- Deposit
-- Withdraw
-- Balance Check
-- Transaction History
-- Update Account
-- Delete Account
-- Admin Audit Logs
+-  👤 Create Account
+-  🔑 Secure Login
+-  💰 Deposit
+-  💸 Withdraw
+-  🕒 Balance Check
+-  📜 Transaction History
+-  🖋️ Update Account
+-  🗑️ Delete Account
+-  🛠️ Admin Audit Logs
         """)
 
     with col2:
@@ -148,7 +237,7 @@ Features:
 # ===================================================
 # CREATE ACCOUNT
 # ===================================================
-elif choice == "Create Account":
+elif choice == "👤 Create Account":
 
     st.subheader("Create New Account")
 
@@ -182,35 +271,24 @@ elif choice == "Create Account":
             st.error("PIN does not match.")
 
         else:
-
-            account = bank.create_account(
-                name,
-                pin
-            )
+            with st.spinner("Creating account..."):
+                account = bank.create_account(name,pin)   
 
             if account:
-
                 st.success("Account Created Successfully")
-
-                st.info(
-                    f"Account Number : {account.get_account_number()}"
-                )
-
-                st.warning(
-                    "Save this Account Number safely."
-                )
+                st.toast("🎉 Welcome to our bank!")
+                st.balloons()
+                st.info(f"Account Number : {account.get_account_number()}")
+                st.warning("Save this Account Number safely.")
 
             else:
-
-                st.error(
-                    "Unable to create account."
-                )
+                st.error("Unable to create account.")
 
 
 # ===================================================
 # LOGIN
 # ===================================================
-elif choice == "Login":
+elif choice == "🔑 Login":
 
     st.subheader("Customer Login")
 
@@ -226,91 +304,103 @@ elif choice == "Login":
         )
 
         login = st.form_submit_button(
-            "Login"
+            " 🔑 Login"
         )
 
     if login:
-
-        account = Account.load_from_db(
-            account_number,
-            pin
-        )
+        with st.spinner("Authenticating..."):
+            account = Account.load_from_db(account_number,pin)
 
         if account:
-
             st.session_state.logged_in = True
             st.session_state.account = account
             st.session_state.pin = pin
-
             st.success("Login Successful")
+            st.toast("👋 Login Successful!")
 
             st.rerun()
 
         else:
-
-            st.error(
-                "Invalid Account Number or PIN."
-            )
-
+            st.error("Invalid Account Number or PIN.")
 # ===================================================
 # DASHBOARD
 # ===================================================
-elif choice == "Dashboard":
+elif choice == "📊 Dashboard":
 
-    refresh_account()
+    with st.spinner("Loading dashboard..."):
+        refresh_account()
     account = st.session_state.account
 
-    st.subheader("Customer Dashboard")
-
+    st.title("🏦 Customer Dashboard")
+    st.markdown(f"""### 👋 Welcome back, **{account.get_name()}**
+    Manage your account, view transactions and monitor your balance securely.
+    """)
+    st.divider()
+    # ==========================
+    # Customer Information
+    # ==========================
     col1, col2 = st.columns(2)
 
     with col1:
-        st.metric(
-            "Account Holder",
-            account.get_name()
-        )
-
-        st.metric(
-            "Account Number",
-            account.get_account_number()
-        )
+        st.metric("👤 Account Holder", account.get_name())
+        st.metric("🏦 Account Number", account.get_account_number())
 
     with col2:
-        st.metric(
-            "Available Balance",
-            f"${account.get_balance():,.2f}"
-        )
-
+        st.metric("💰 Available Balance", f"₹{account.get_balance():,.2f}")
     st.divider()
+
+    # ==========================
+    # Quick Actions
+    # ==========================
+
+    st.subheader("⚡ Quick Actions")
 
     c1, c2, c3 = st.columns(3)
 
     with c1:
-        st.info("Use the sidebar to Deposit money.")
-
+        st.info("💰 Deposit Money")
     with c2:
-        st.info("Use the sidebar to Withdraw money.")
-
+        st.info("💸 Withdraw Money")
     with c3:
-        st.info("View transaction history anytime.")
+        st.info("📜 Transaction History")
 
+    st.divider()
 
+    # ==========================
+    # Recent Transactions
+    # ==========================
+
+    st.markdown("## 🕒 Recent Transactions")
+
+    logs = bank.get_recent_transactions(account.get_account_number())
+
+    if logs:
+
+        recent_df = pd.DataFrame(logs)
+
+        recent_df = recent_df.rename(columns={
+            "holder_name": "Customer",
+            "action": "Action",
+            "amount": "Amount",
+            "timestamp": "Date & Time"
+        })
+
+        st.dataframe(recent_df.head(5), use_container_width=True)
+
+    else:
+        st.info("No recent transactions available.")
 # ===================================================
 # DEPOSIT
 # ===================================================
-elif choice == "Deposit":
+elif choice == "💰 Deposit":
 
     refresh_account()
     account = st.session_state.account
 
     st.subheader("Deposit Money")
-
-    st.write(
-        f"Current Balance : **${account.get_balance():,.2f}**"
-    )
+    st.write(f"Current Balance : **₹{account.get_balance():,.2f}**")
 
     with st.form("deposit_form"):
-
         amount = st.number_input(
             "Deposit Amount",
             min_value=0.0,
@@ -318,56 +408,43 @@ elif choice == "Deposit":
             format="%.2f"
         )
 
-        deposit_btn = st.form_submit_button(
-            "Deposit"
-        )
+        deposit_btn = st.form_submit_button(" 💰 Deposit")
 
     if deposit_btn:
-
         if amount <= 0:
             st.error("Enter a valid amount.")
-
         else:
-
-            success = bank.deposit(
-                account.get_account_number(),
-                st.session_state.pin,
-                amount
-            )
+            with st.spinner("Processing Deposit..."):
+                success = bank.deposit(
+                    account.get_account_number(),
+                    st.session_state.pin,
+                    amount
+                )
 
             if success:
 
                 refresh_account()
 
-                st.success(
-                    f"${amount:,.2f} deposited successfully."
-                )
-
-                st.metric(
-                    "Updated Balance",
-                    f"${st.session_state.account.get_balance():,.2f}"
-                )
+                st.success(f"₹{amount:,.2f} deposited successfully.")
+                st.toast("💰 Deposit Successful!")
+                st.metric("Updated Balance",
+                    f"₹{st.session_state.account.get_balance():,.2f}")
 
             else:
-
-                st.error(
-                    "Deposit failed."
-                )
+                st.error("Please verify the amount and try again.")
 
 
 # ===================================================
 # WITHDRAW
 # ===================================================
-elif choice == "Withdraw":
+elif choice == "💸 Withdraw":
 
     refresh_account()
     account = st.session_state.account
 
     st.subheader("Withdraw Money")
 
-    st.write(
-        f"Current Balance : **${account.get_balance():,.2f}**"
-    )
+    st.write(f"Current Balance : **₹{account.get_balance():,.2f}**")
 
     with st.form("withdraw_form"):
 
@@ -378,19 +455,16 @@ elif choice == "Withdraw":
             format="%.2f"
         )
 
-        withdraw_btn = st.form_submit_button(
-            "Withdraw"
-        )
+        withdraw_btn = st.form_submit_button(" 💸 Withdraw")
 
     if withdraw_btn:
 
         if amount <= 0:
-
             st.error("Enter a valid amount.")
 
         else:
-
-            success = bank.withdraw(
+            with st.spinner("Processing Withdrawal..."):
+                success = bank.withdraw(
                 account.get_account_number(),
                 st.session_state.pin,
                 amount
@@ -400,25 +474,18 @@ elif choice == "Withdraw":
 
                 refresh_account()
 
-                st.success(
-                    f"${amount:,.2f} withdrawn successfully."
-                )
-
-                st.metric(
-                    "Updated Balance",
-                    f"${st.session_state.account.get_balance():,.2f}"
-                )
+                st.success(f"₹{amount:,.2f} withdrawn successfully.")
+                st.toast("💸 Withdrawal Successful!")
+                st.metric("Updated Balance",f"₹{st.session_state.account.get_balance():,.2f}")
 
             else:
 
-                st.error(
-                    "Withdrawal failed.\n\nPossible reasons:\n- Insufficient balance\n- Invalid amount"
-                )
+                st.error("Withdrawal failed.\n\nPossible reasons:\n- Insufficient balance\n- Invalid amount")
 
 # ===================================================
 # TRANSACTION HISTORY
 # ===================================================
-elif choice == "Transaction History":
+elif choice == "📜 Transaction History":
 
     refresh_account()
     account = st.session_state.account
@@ -426,23 +493,78 @@ elif choice == "Transaction History":
     st.subheader("Transaction History")
 
     logs = bank.get_audit_logs(account.get_account_number())
+    transaction_type = st.selectbox(
+        "Filter by Transaction Type",
+        ["All", " 💰 Deposit", " 💸 Withdraw", " 📄 Account created"]
+    )
+    minimum_amount = st.number_input(
+        "Minimum Amount (₹)",
+        min_value=0,
+        value=0,
+        step=500
+    )
+    date_filter = st.selectbox(
+    "Filter by Date",
+    [
+        "All",
+        "Today",
+        "Last 7 Days",
+        "Last 30 Days"
+    ]
+)
 
     if not logs:
         st.info("No transactions found.")
     else:
-        df = pd.DataFrame(logs)
+        df = pd.DataFrame(
+            logs,
+            columns=[
+                "ID",
+                "Account Number",
+                "Holder Name",
+                "Action",
+                "Amount",
+                "Date & Time"
+            ]
+        )
+        if transaction_type != "All":
+            df = df[df["Action"] == transaction_type]
+        if minimum_amount > 0:
+            df = df[df["Amount"] >= minimum_amount]
+
+        df["Date & Time"] = pd.to_datetime(df["Date & Time"])
+
+        today = datetime.now()
+
+        if date_filter == "Today":
+            df = df[df["Date & Time"].dt.date == today.date()]
+
+        elif date_filter == "Last 7 Days":
+            df = df[df["Date & Time"] >= today - timedelta(days=7)]
+
+        elif date_filter == "Last 30 Days":
+            df = df[df["Date & Time"] >= today - timedelta(days=30)]
+
         st.dataframe(df, use_container_width=True)
 
+        csv = df.to_csv(index=False).encode("utf-8")
+
+        st.download_button(
+            label="⬇️ Download Transaction History (CSV)",
+            data=csv,
+            file_name=f"Transaction_History_{account.get_account_number()}.csv",
+            mime="text/csv"
+        )
 
 # ===================================================
 # UPDATE ACCOUNT
 # ===================================================
-elif choice == "Update Account":
+elif choice == "✏️ Update Account":
 
     refresh_account()
     account = st.session_state.account
 
-    st.subheader("Update Account")
+    st.subheader("✏️ Update Account")
 
     option = st.selectbox(
         "Select what you want to update",
@@ -466,6 +588,7 @@ elif choice == "Update Account":
                 refresh_account()
 
                 st.success("Name updated successfully.")
+                st.toast("✅ Name Updated")
 
 
     elif option == "Change PIN":
@@ -494,17 +617,18 @@ elif choice == "Update Account":
                 refresh_account()
 
                 st.success("PIN updated successfully.")
+                st.toast("🔐 PIN Updated")
 
 
 # ===================================================
 # DELETE ACCOUNT
 # ===================================================
-elif choice == "Delete Account":
+elif choice == "🗑️ Delete Account":
 
     refresh_account()
     account = st.session_state.account
 
-    st.subheader("Delete Account")
+    st.subheader("🗑️ Delete Account")
 
     st.warning("⚠ This action is permanent and cannot be undone.")
 
@@ -512,7 +636,7 @@ elif choice == "Delete Account":
 
     pin = st.text_input("Enter PIN", type="password")
 
-    if st.button("Delete Account"):
+    if st.button("🗑️ Delete Account"):
 
         if confirm != "DELETE":
             st.error("Confirmation text does not match.")
@@ -521,29 +645,24 @@ elif choice == "Delete Account":
             st.error("Incorrect PIN.")
 
         else:
-
             success = account.delete_from_db()
 
             if success:
-
                 st.success("Account deleted successfully.")
+                st.toast("Account Closed Successfully")
 
                 logout()
-
 
 # ===================================================
 # LOGOUT
 # ===================================================
-elif choice == "Logout":
-
+elif choice == "🚪 Logout":
     logout()
-
 
 # ===================================================
 # ADMIN PANEL
 # ===================================================
-elif choice == "Admin":
-
+elif choice == "🛠️ Admin":
     st.subheader("Admin Panel")
 
     admin_option = st.selectbox(
@@ -579,6 +698,7 @@ elif choice == "Admin":
 
                 if success:
                     st.success("Audit logs cleared successfully.")
+                    st.toast("Audit Logs Deleted")
                 else:
                     st.error("Failed to clear logs.")
 
@@ -588,23 +708,38 @@ elif choice == "Admin":
 # ===================================================
 # ANALYTICS
 # ===================================================
-elif choice == "Analytics":
+elif choice == "📈 Analytics":
+
+    refresh_account()
+    account = st.session_state.account
 
     st.title("📊 Bank Analytics Dashboard")
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         st.metric(
-            "👥 Total Accounts",
-            bank.get_total_accounts()
+            "👤 Account Holder",
+            account.get_name()
         )
-
     with col2:
         st.metric(
-            "💰 Total Bank Balance",
-            f"₹{bank.get_total_bank_balance():,.2f}"
+            "🏦 Account Number",
+            account.get_account_number()
         )
+    with col3:
+        st.metric(
+            "💰 Available Balance",
+            f"₹{account.get_balance():,.2f}"
+        )
+    if account.get_balance() >= 50000:
+        st.success("🟢 Excellent Balance")
+
+    elif account.get_balance() >= 10000:
+        st.info("🔵 Healthy Balance")
+
+    else:
+        st.warning("🟠 Low Balance")
 
     col3, col4 = st.columns(2)
 
@@ -623,7 +758,7 @@ elif choice == "Analytics":
     st.divider()
 
     chart_data = pd.DataFrame({
-        "Transaction": ["Deposits", "Withdrawals"],
+        "Transaction": [" 💰 Deposits", " 💸 Withdrawals"],
         "Amount": [
             bank.get_total_deposits(),
             bank.get_total_withdrawals()
@@ -637,33 +772,75 @@ elif choice == "Analytics":
         text="Amount",
         title="Deposits vs Withdrawals"
     )
+    fig.update_layout(
+        template="plotly_white",
+        title_x=0.5
+    )
 
     st.plotly_chart(fig, use_container_width=True)
+    st.divider()
     st.subheader("🏆 Top 10 Richest Customers")
 
-top_accounts = bank.get_top_accounts()
+    top_accounts = bank.get_top_accounts()
 
-if top_accounts:
+    if top_accounts:
 
-    df = pd.DataFrame(
-        top_accounts,
-        columns=["Customer", "Balance"]
-    )
+        df = pd.DataFrame(
+            top_accounts,
+            columns=["Customer", "Balance"]
+        )
 
-    fig2 = px.bar(
-        df,
-        x="Balance",
-        y="Customer",
-        orientation="h",
-        text="Balance",
-        title="Top 10 Richest Customers",
-        color="Balance",
-        color_continuous_scale="Greens"
-    )
+        fig2 = px.bar(
+            df,
+            x="Balance",
+            y="Customer",
+            orientation="h",
+            text="Balance",
+            title="Top 10 Richest Customers",
+            color="Balance",
+            color_continuous_scale="Greens"
+        )
+        fig2.update_layout(
+            template="plotly_white",
+            title_x=0.5,
+        )
 
-    st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, use_container_width=True)
+        st.divider()
+        st.subheader("📈 Daily Transactions")
 
-else:
-    st.info("No accounts found.")
+        daily_data = bank.get_daily_transactions()
+
+        if daily_data:
+
+            df_daily = pd.DataFrame(
+                daily_data,
+                columns=["Date", "Transactions"]
+            )
+
+            fig3 = px.line(
+                df_daily,
+                x="Date",
+                y="Transactions",
+                markers=True,
+                title="Daily Transaction Trend"
+            )
+            fig3.update_layout(
+                template="plotly_white",
+                title_x=0.5
+            )
+
+            st.plotly_chart(fig3, use_container_width=True)
+        else:
+            st.info("No transaction data available.")
+
+    else:
+        st.info("No accounts found.")
 
     st.success("Analytics Dashboard Loaded Successfully ✅")
+
+    st.markdown("---")
+
+    st.caption(
+    "🏦 Bank Management System | Developed by Gargi Kundu | Python • PostgreSQL • Streamlit"
+)
