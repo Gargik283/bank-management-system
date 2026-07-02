@@ -17,7 +17,7 @@
 
 Manage bank accounts, perform transactions, visualize analytics, and maintain audit logs through an interactive dashboard.
 
-🌐 **Live Demo:** https://gargik283-bank-management-system-app-gkw546.streamlit.app/
+🌐 **Live Demo:** https://bank-management-system123.streamlit.app/
 
 </p>
 
