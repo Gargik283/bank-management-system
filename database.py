@@ -1,30 +1,18 @@
-import os
+import streamlit as st
 import psycopg2
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
 
 def connect_to_database():
     try:
         connection = psycopg2.connect(
-            host=os.getenv("DB_HOST"),
-            port=os.getenv("DB_PORT"),
-            database=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD")
+            host=st.secrets["DB_HOST"],
+            database=st.secrets["DB_NAME"],
+            user=st.secrets["DB_USER"],
+            password=st.secrets["DB_PASSWORD"],
+            port=st.secrets["DB_PORT"],
+            sslmode="require"
         )
-
         return connection
 
     except Exception as e:
-        print(f"Database Connection Error: {e}")
+        print(e)
         return None
-
-
-if __name__ == "__main__":
-    conn = connect_to_database()
-
-    if conn:
-        print("Database Connected Successfully.")
-        conn.close()
