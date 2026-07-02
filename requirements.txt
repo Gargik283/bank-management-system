@@ -1,11 +1,6 @@
 streamlit
-<<<<<<< HEAD
 pandas
 plotly
 psycopg2-binary
-python-dotenv
 reportlab
-=======
-psycopg2-binary
-pandas
->>>>>>> c2b41adc17618bc11243c1c226a6bc1c51d13a7d
+python-dotenv
