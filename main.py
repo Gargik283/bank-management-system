@@ -1,9 +1,6 @@
-from multiprocessing.dummy import connection
 import random
 import string
 import hashlib
-import psycopg2
-import os
 from database import connect_to_database
 
 # ==================== UTILITY FUNCTIONS ====================
@@ -463,27 +460,6 @@ class BankSystem:
                 ORDER BY timestamp DESC
                 LIMIT 5
                 """, (account_number,))
-
-        rows = cursor.fetchall()
-
-        cursor.close()
-        connection.close()
-
-        return rows
-    
-    def get_top_customers(self):
-
-        connection = connect_to_database()
-        cursor = connection.cursor()
-
-        cursor.execute("""
-        SELECT
-            name,
-            balance
-        FROM accounts
-        ORDER BY balance DESC
-        LIMIT 10
-    """)
 
         rows = cursor.fetchall()
 
