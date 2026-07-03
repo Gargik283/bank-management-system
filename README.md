@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# 🏦 Bank Management System
+# 🏦 Bank Management System with Analytics Dashboard
 
 <p align="center">
 
@@ -13,9 +12,9 @@
 
 <p align="center">
 
-### 🚀 A Secure Banking Management System built using Python, PostgreSQL & Streamlit
+<b>🚀 A Secure Banking Management System built using Python, PostgreSQL & Streamlit</b>
 
-Manage bank accounts, perform transactions, visualize analytics, and maintain audit logs through an interactive dashboard.
+Manage bank accounts, perform secure transactions, visualize analytics, and maintain audit logs through an interactive web application.
 
 🌐 **Live Demo:** https://bank-management-system123.streamlit.app/
 
@@ -23,103 +22,68 @@ Manage bank accounts, perform transactions, visualize analytics, and maintain au
 
 ---
 
-# 📌 Table of Contents
-
-- Project Overview
-- Features
-- Tech Stack
-- Screenshots
-- Project Structure
-- Database Design
-- Installation
-- Running the Application
-- Analytics Dashboard
-- Future Improvements
-- Author
-
----
-
-# 📖 Project Overview
+# 🌟 Executive Summary
 
 The **Bank Management System** is a full-stack banking application developed using **Python**, **PostgreSQL**, and **Streamlit**.
 
-It demonstrates secure banking operations while following Object-Oriented Programming principles and relational database design.
-
-The application allows users to:
-
-- Create bank accounts
-- Login securely
-- Deposit money
-- Withdraw money
-- Update account information
-- Delete accounts
-- View transaction history
-- Download transaction history as CSV
-- Analyze banking data through interactive dashboards
-- Track every activity using audit logs
+It simulates real-world banking operations including secure account management, deposits, withdrawals, transaction tracking, audit logging, and interactive analytics. The project demonstrates practical implementation of **Object-Oriented Programming (OOP)**, **relational database design**, **secure authentication**, and **data visualization**.
 
 ---
 
-# ✨ Features
+# ✨ Key Features
 
-## 👤 Customer Module
+### 👤 Customer Operations
 
 - Create New Account
 - Secure Login
 - Deposit Money
 - Withdraw Money
-- View Balance
-- Update Name
-- Update PIN
+- View Account Balance
+- Update Customer Details
+- Change PIN
 - Delete Account
-- Recent Transactions
-- Download Transaction History (CSV)
+- View Transaction History
+- Download Transactions as CSV
 
----
-
-## 📊 Analytics Dashboard
+### 📊 Analytics Dashboard
 
 - Deposit vs Withdrawal Analysis
-- Daily Transaction Trend
+- Daily Transaction Trends
 - Top 10 Richest Customers
-- Balance Health Indicator
-- Interactive Plotly Charts
+- Account Balance Distribution
+- Interactive Plotly Visualizations
 
----
-
-## 🛡️ Security
+### 🛡️ Security
 
 - SHA-256 PIN Hashing
 - Parameterized SQL Queries
 - Session-Based Authentication
-- PostgreSQL Database
+- Secure PostgreSQL Database
 
----
-
-## 🛠️ Admin Features
+### 🛠️ Admin Features
 
 - View Audit Logs
 - Clear Audit Logs
-- Monitor User Activity
+- Monitor User Activities
 
 ---
 
 # 💻 Tech Stack
 
-| Technology | Purpose |
-|------------|----------|
+| Technology | Role |
+|------------|------|
 | Python | Backend Logic |
-| PostgreSQL | Database |
-| Streamlit | Web Interface |
+| PostgreSQL | Relational Database |
+| Streamlit | Interactive Web Application |
 | Plotly | Data Visualization |
 | Pandas | Data Processing |
-| psycopg2 | PostgreSQL Connectivity |
-| hashlib | PIN Encryption |
+| psycopg2 | Database Connectivity |
+| hashlib | Secure PIN Hashing |
 | python-dotenv | Environment Variables |
 
 ---
 
-# 📸 Application Screenshots
+# 📸 Application Preview
 
 ## 🏠 Home
 
@@ -145,7 +109,7 @@ The application allows users to:
 
 ---
 
-## 💰 Deposit
+## 💰 Deposit Transaction
 
 ![](screenshots/deposit.png)
 
@@ -165,10 +129,27 @@ The application allows users to:
 
 ---
 
+# 🏗️ System Architecture
+
+```text
+          Streamlit Web Interface
+                    │
+                    ▼
+        Python Business Logic (OOP)
+                    │
+                    ▼
+         PostgreSQL Database
+                    │
+                    ▼
+      Audit Logs & Transaction Records
+```
+
+---
+
 # 📂 Project Structure
 
-```
-Bank-Management-System
+```text
+Bank-Management-System/
 │
 ├── screenshots/
 ├── app.py
@@ -176,8 +157,8 @@ Bank-Management-System
 ├── database.py
 ├── pdf_generator.py
 ├── requirements.txt
-├── .gitignore
 ├── README.md
+├── .gitignore
 └── .env
 ```
 
@@ -185,7 +166,9 @@ Bank-Management-System
 
 # 🗄️ Database
 
-## Accounts Table
+The application uses PostgreSQL to manage banking operations with two primary tables:
+
+### Accounts
 
 - Account Number
 - Customer Name
@@ -193,96 +176,73 @@ Bank-Management-System
 - Balance
 - Created Date
 
----
+### Audit Logs
 
-## Audit Table
-
-Stores every transaction including:
-
-- Deposit
-- Withdraw
 - Account Created
+- Deposit
+- Withdrawal
 - Account Updated
+- Account Deleted
 - Timestamp
 
 ---
 
 # ⚙️ Installation
 
-Clone the repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/Gargik283/bank-management-system.git
 ```
 
-Move into the project
+Navigate to the project folder:
 
 ```bash
 cd bank-management-system
 ```
 
-Install dependencies
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-# 🔐 Configure Environment Variables
-
-Create a `.env` file in the project root.
+Create a `.env` file:
 
 ```env
-DB_HOST=localhost
-DB_PORT=2004
-DB_NAME=banksystemmanagement
-DB_USER=postgres
+DB_HOST=your_host
+DB_PORT=your_port
+DB_NAME=your_database
+DB_USER=your_username
 DB_PASSWORD=your_password
 ```
 
----
-
-# ▶️ Run the Application
+Run the application:
 
 ```bash
 streamlit run app.py
-```
-
-The application will launch at:
-
-```
-http://localhost:8501
 ```
 
 ---
 
 # 📊 Analytics Included
 
-✔ Deposit Analysis
-
-✔ Withdrawal Analysis
-
-✔ Daily Transaction Trends
-
-✔ Top 10 Richest Customers
-
-✔ Account Balance Monitoring
-
-✔ Audit Log Tracking
+- Deposit vs Withdrawal Analysis
+- Daily Transaction Trends
+- Top 10 Richest Customers
+- Account Balance Distribution
+- Audit Log Monitoring
 
 ---
 
-# 🚀 Future Improvements
+# 🚀 Future Enhancements
 
-- Export Transactions as PDF
-- Email Notifications
-- OTP Authentication
+- OTP-Based Authentication
 - Role-Based Access Control
-- Password Recovery
+- Email Notifications
 - Cloud Database Integration
 - Docker Deployment
-- AI-powered Fraud Detection
+- AI-Based Fraud Detection
 - Power BI Dashboard Integration
 
 ---
@@ -291,16 +251,16 @@ http://localhost:8501
 
 **Gargi Kundu**
 
-B.Tech Graduate | Python | SQL | PostgreSQL | Streamlit | Data Analytics
+Aspiring **Data Analyst** | Python | SQL | PostgreSQL | Streamlit | Power BI
 
-GitHub: https://github.com/Gargik283
+📧 **Email:** gargikundu211@gmail.com
+
+💼 **LinkedIn:** https://www.linkedin.com/in/gargi-kundu
+
+🐙 **GitHub:** https://github.com/Gargik283
 
 ---
 
 # ⭐ Support
 
-If you found this project useful, please consider giving it a ⭐ on GitHub.
-
-It helps others discover the project and supports future improvements.
-=======
->>>>>>> a7b0566 (Update README and main.py)
+If you found this project useful, consider giving it a ⭐ on GitHub.
